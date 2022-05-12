@@ -3,30 +3,159 @@
   padding: 0;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 .App {
   width: 100vw;
   height: 100vh;
+
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+
+}
+
+.App h1 {
+  width: unset;
+  text-align: center;
+  background-color: rgb(37, 28, 37);
+  font-weight: 300;
+  color: white;
+  padding: 10px 20px;
+  border-bottom: 5px solid #5865F2;
+  height: 5vh;
+}
+
+#App-body {
+  display: flex;
+  flex-direction: row; 
+  border-left: 5px solid #5865F2;
+  border-bottom: 5px solid #5865F2;
+  flex-grow: 1;
 }
 
 #phaserContainer {
+ flex: 3;
+ margin: 0 auto;
+ /* height: 92vh; */
+ box-sizing:border-box;
+}
 
+#files {
+  flex-grow: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.file {
+  background-color: rgb(37, 28, 37);
+  border-radius: 10px;
+  margin: 30px;
+  padding: 0px;
+  flex-grow: 1;
+  color: white;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.file-select {
+  background-color: #9b84ec;
+  color: #23272a;
+  font-weight: bold;
+  /* padding: 5px; */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.file-select::file-selector-button {
+  margin-right: 20px;;
+  background-color: #583694;
+  padding: 10px;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.file h3 {
+  margin: 0px;
+  text-align: center;
+  width: 100%;
+  padding: 5px 10px;
+  /* box-sizing: border-box; */
+  font-weight: 300;
+}
+
+.preview {
+  background-color: white;
+  flex: 1;
+  align-items: center;
+  color: #23272a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .assetContainer {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: #5865F2;
-  padding: 20px;
+  background: #373f92;
+  /* padding: 20px; */
+  flex: 2;
+
 }
 
 .button {
+  border: none;
   background: #57F287;
-  margin-bottom: 15px;
-  padding: 10px;
-  border-radius: 4px;
+  padding: 20px;
   text-align: center;
   cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
 }
+
+.button-switch {
+  border: none;
+  background: transparent;
+  padding: 10px;
+  color: #23272a;
+  text-align: center;
+  cursor: pointer;
+  width: 100px;
+  transition: all 1s;
+  border-radius: 4px;
+  font-weight: bold;
+
+}
+
+.button-switch:hover {
+  background: #57F287;
+  /* color: white; */
+  
+}
+
+.button-switch:disabled {
+  background: #57F287;
+  /* color: white; */
+  cursor: unset
+}
+
+
+
+.app-toggle {
+  background-color: #5865F2;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+
+/* .app-toggle button{
+  padding: border
+} */

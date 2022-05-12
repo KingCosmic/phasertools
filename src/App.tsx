@@ -39,10 +39,13 @@ function App() {
       title: 'AnimationSystem',
       pixelArt: true,
       scale: {
-        height: '100%',
+        parent: 'phaserContainer',
+        // mode: Phaser.Scale.RESIZE, 
         autoCenter: Phaser.Scale.CENTER_BOTH,
+        height: '100%',
+        width: '100%',
       },
-      parent: 'phaserContainer',
+      
       backgroundColor: '#000',
       scene: [PreviewScene],
     })
@@ -52,14 +55,39 @@ function App() {
 
   return (
     <div className="App">
-      <div id='phaserContainer' />
-      <div className='assetContainer'>
-        <input type='file' id='animation' name='animation' onChange={changeAnimation} />
+      <h1>Phaser 3 - UV Mapping Tool</h1>
+      <section id="App-body">
+        <div id='phaserContainer' />
+        <div className='assetContainer'>
+          <div className='app-toggle'>
+            <button className='button-switch' id='create' disabled={true}>create</button>
+            <button className='button-switch' id='preview'>preview</button>
 
-        <input type='file' id='colorscheme' name='colorscheme' onChange={changeColorScheme} />
+          </div>
+          <section id='files'>
+            <div className='file'>
+              <h3>UV animation base:</h3>
+              <input type='file' className='file-select' id='animation' name='animation' onChange={changeAnimation} />
+              <div className='preview'>
+                Please select a file
+              </div>
+            </div>
+            
+            <div className='file'>
+              <h3>UV unwrap map:</h3>
+              <input type='file' className='file-select' id='colorscheme' name='colorscheme' onChange={changeColorScheme} />
+              <div className='preview'>
+                Please select a file
+              </div>
+            </div>
+          </section>
+          
 
-        <div className='button' onClick={convertAnimation}>Convert to animation data</div>
-      </div>
+
+          <div className='button' onClick={convertAnimation}>Convert to animation data</div>
+        </div>
+      </section>
+      
     </div>
   )
 }
