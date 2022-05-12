@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+
+#phaserContainer {
+
+}
+
+.assetContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #5865F2;
+  padding: 20px;
+}
+
+.button {
+  background: #57F287;
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+}
