@@ -1,11 +1,10 @@
 import Phaser, { GameObjects } from 'phaser'
 
+// @ts-ignore
 import UVPipeline from 'phaser3-uv-mapping'
 
 import events from '../systems/events'
 
-import animUrl from '../assets/default-anim.png'
-import colorUrl from '../assets/default-color.png'
 import { convertAnimation } from '../systems/colorswap'
 
 class Preview extends Phaser.Scene {
@@ -21,8 +20,8 @@ class Preview extends Phaser.Scene {
   }
 
   preload() {
-    this.load.spritesheet('default-anim', animUrl, { frameWidth: 15, frameHeight: 15 })
-    this.load.image('default-color', colorUrl)
+    this.load.spritesheet('default-anim', '/assets/default-anim.png', { frameWidth: 15, frameHeight: 15 })
+    this.load.image('default-color', '/assets/default-color.png')
   }
 
   create() {

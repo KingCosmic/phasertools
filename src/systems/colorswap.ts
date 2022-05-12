@@ -151,9 +151,9 @@ export function convertAnimation(game:Phaser.Game, config:Config) {
   var image = canvas.toDataURL("image/png", 1.0).replace("image/png", "image/octet-stream");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
 
   // create temporary link  
-  var tmpLink = document.createElement( 'a' );  
+  var tmpLink = document.createElement( 'a' );
   tmpLink.download = 'converted-animation.png';
-  tmpLink.href = image;  
+  tmpLink.href = image;
 
   // temporarily add link to body and initiate the download  
   document.body.appendChild( tmpLink );  
