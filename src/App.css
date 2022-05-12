@@ -78,6 +78,14 @@ html {
   color: white;
   border: none;
   cursor: pointer;
+  transition: all 1s;
+  text-align: center;
+  align-items: center;
+}
+
+.file-select::file-selector-button:hover {
+  background-color: #49ddc1;
+  color: #23272a;
 }
 
 .file h3 {
@@ -153,6 +161,20 @@ html {
   display: flex;
   justify-content: center;
   gap: 10px;
+}
+
+.preview-img {
+  width: 100%;
+  image-rendering: pixelated;
+  border: 5px solid white;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+
+.hidden {
+  display: none;
+
 }
 
 
