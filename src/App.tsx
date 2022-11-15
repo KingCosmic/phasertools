@@ -20,7 +20,7 @@ function App() {
       scale: {
         parent: 'phaserContainer',
         // mode: Phaser.Scale.RESIZE, 
-        autoCenter: Phaser.Scale.CENTER_BOTH,
+        // autoCenter: Phaser.Scale.CENTER_BOTH,
         height: '100%',
         width: '100%',
       },
@@ -38,10 +38,10 @@ function App() {
 
   return (
     <div className="w-screen h-screen flex flex-col">
-      <h1 className="text-center font-bold text-white bg-gray-900 p-4">Phaser 3 - UV Mapping Tool</h1>
-      <section className="flex flex-1 flex-row">
+      <h1 className="text-center font-bold text-white bg-gray-900 p-4" style={{'height': '10%'}}>Phaser 3 - UV Mapping Tool</h1>
+      <section className="flex flex-1 flex-row" style={{'height': '90%'}}>
         <div id="phaserContainer" className="w-3/4" />
-        <div className='flex w-1/4 flex-col justify-between bg-purple-600 overflow-y-scroll'>
+        <div className='flex w-1/4 flex-col justify-between bg-purple-600 overflow-y-auto'>
           <div className='flex p-3 bg-blue-600 justify-center gap-3'>
             <button className='button-switch' id='create' disabled={createOpen}
               onClick={toggleApp}
