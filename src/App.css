@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
   margin: 0;
   padding: 0;
@@ -13,7 +17,6 @@ html {
 
   display: flex;
   flex-direction: column;
-
 }
 
 .App h1 {
@@ -138,22 +141,16 @@ html {
   transition: all 1s;
   border-radius: 4px;
   font-weight: bold;
-
 }
 
 .button-switch:hover {
   background: #57F287;
-  /* color: white; */
-  
 }
 
 .button-switch:disabled {
   background: #57F287;
-  /* color: white; */
   cursor: unset
 }
-
-
 
 .app-toggle {
   background-color: #5865F2;
@@ -171,13 +168,6 @@ html {
   border-bottom-right-radius: 10px;
 }
 
-
 .hidden {
   display: none;
-
 }
-
-
-/* .app-toggle button{
-  padding: border
-} */

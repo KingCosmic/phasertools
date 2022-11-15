@@ -5,7 +5,7 @@ import UVPipeline from 'phaser3-uv-mapping'
 
 import events from '../systems/events'
 
-import { convertAnimation } from '../systems/colorswap'
+import { convertAnimation, convertAnimationToSpriteSheet } from '../systems/colorswap'
 
 class Preview extends Phaser.Scene {
 
@@ -27,8 +27,6 @@ class Preview extends Phaser.Scene {
   create() {
     // grab our camera for easy centering.
     const cam = this.cameras.main
-
-    cam.setBackgroundColor('rgba(255, 255, 255)')
 
     cam.setZoom(10)
 
@@ -94,6 +92,31 @@ class Preview extends Phaser.Scene {
         }]
       })
 
+      console.log(anims)
+      this.sprite.play(anims[0])
+    })
+
+    events.on('createAnimation', () => {
+      const lookupKey = (this.internalColorKey > 0) ? `${this.internalColorKey}-color` : 'default-color'
+      const animKey = (this.internalAnimKey > 0) ? `${this.internalAnimKey}-anim` : 'default-anim'
+
+      const anims = convertAnimationToSpriteSheet(this.game, {
+        lookupKey,
+        spriteSheet: {
+          key: animKey,
+          frameWidth: 15,
+          frameHeight: 15
+        },
+        animations: [{
+          key: 'rotate',
+          frameRate: 7,
+          startFrame: 0,
+          endFrame: 5,
+          repeat: -1
+        }]
+      })
+
+      console.log(anims)
       this.sprite.play(anims[0])
     })
   }
