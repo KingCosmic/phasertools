@@ -181,10 +181,17 @@ function Preview() {
   return (
     <div className='bg-slate-700 flex flex-1 flex-col p-2'>
       <div className='flex flex-col mb-2'>
-        <h3 className='text-white mb-2'>Background Color</h3>
-        <select>
-          <option value='rgba(0,0,0,1)'>black</option>
-        </select>
+        <h3 className='text-white mb-2'>Frame Width</h3>
+        <input type='number' defaultValue={15} onChange={(e) => {
+          events.emit('changed-framewidth', e.target.value)
+        }} />
+      </div>
+
+      <div className='flex flex-col mb-2'>
+        <h3 className='text-white mb-2'>Frame Height</h3>
+        <input type='number' defaultValue={15} onChange={(e) => {
+          events.emit('changed-frameheight', e.target.value)
+        }} />
       </div>
 
       <div className='flex flex-col mb-2'>

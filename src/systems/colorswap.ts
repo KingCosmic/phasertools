@@ -29,6 +29,7 @@ export function convertAnimation(game:Phaser.Game, config:Config) {
 
   // Create a canvas to draw new image data onto.
   canvasTexture = game.textures.createCanvas(config.lookupKey + '-temp', sheet.width, sheet.height);
+  // @ts-ignore
   canvas = canvasTexture.getSourceImage();
   // @ts-ignore
   context = canvas.getContext('2d');
@@ -73,6 +74,7 @@ export function convertAnimation(game:Phaser.Game, config:Config) {
 
   // Create a canvas to draw new image data onto.
   canvasTexture = game.textures.createCanvas(config.spriteSheet.key + '-temp', sheet.width, sheet.height);
+  // @ts-ignore
   canvas = canvasTexture.getSourceImage();
   // @ts-ignore
   context = canvas.getContext('2d');
@@ -172,7 +174,7 @@ export function convertAnimation(game:Phaser.Game, config:Config) {
 
 
 
-export function convertAnimationToSpriteSheet(game:Phaser.Game, config:Config) {
+export function convertAnimationToSpriteSheet(game:Phaser.Game, config:Config, shouldDownload:boolean = true) {
   // Create color lookup from palette image.
   var colorLookup: { [key:string]:{ x:number, y:number } } = {}
   var positionLookup: { [key:string]:{ r:number, g:number, b:number } } = {}
@@ -189,6 +191,7 @@ export function convertAnimationToSpriteSheet(game:Phaser.Game, config:Config) {
 
   // Create a canvas to draw new image data onto.
   canvasTexture = game.textures.createCanvas(config.lookupKey + '-temp', sheet.width, sheet.height);
+  // @ts-ignore
   canvas = canvasTexture.getSourceImage();
   // @ts-ignore
   context = canvas.getContext('2d');
@@ -234,6 +237,7 @@ export function convertAnimationToSpriteSheet(game:Phaser.Game, config:Config) {
 
   // Create a canvas to draw new image data onto.
   canvasTexture = game.textures.createCanvas(config.spriteSheet.key + '-temp', sheet.width, sheet.height);
+  // @ts-ignore
   canvas = canvasTexture.getSourceImage();
   // @ts-ignore
   context = canvas.getContext('2d');
@@ -308,22 +312,31 @@ export function convertAnimationToSpriteSheet(game:Phaser.Game, config:Config) {
 
   // download the converted image before deleting temp textures.
 
+  // here is the most important part because if you dont replace you will get a DOM 18 exception.
   // @ts-ignore
   var image = canvas.toDataURL("image/png", 1.0).replace("image/png", "image/octet-stream");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
 
-  // create temporary link
-  var tmpLink = document.createElement( 'a' );
-  tmpLink.download = 'converted-animation.png';
-  tmpLink.href = image;
+  if (!shouldDownload) {
+    // create temporary link
+    var tmpLink = document.createElement( 'a' );
+    tmpLink.download = `${config.spriteSheet.key}-${config.lookupKey}.png`;
+    tmpLink.href = image;
 
-  // temporarily add link to body and initiate the download
-  document.body.appendChild( tmpLink );
-  tmpLink.click();
-  document.body.removeChild( tmpLink );
+    // temporarily add link to body and initiate the download
+    document.body.appendChild( tmpLink );
+    tmpLink.click();
+    document.body.removeChild( tmpLink );
+  }
 
   // destroy temp texture.
   game.textures.get(config.spriteSheet.key + '-temp').destroy();
   game.textures.get(config.lookupKey + '-temp').destroy();
 
-  return createdAnims
+  return { key: atlasKey, anims: createdAnims }
+}
+
+
+
+function createUVUnwrap() {
+  
 }

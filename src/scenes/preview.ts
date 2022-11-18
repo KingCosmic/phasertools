@@ -1,16 +1,15 @@
 import Phaser, { GameObjects } from 'phaser'
 
-// @ts-ignore
-import UVPipeline from 'phaser3-uv-mapping'
-
 import events from '../systems/events'
 
 import { convertAnimation, convertAnimationToSpriteSheet } from '../systems/colorswap'
 
+let frameWidth = 32
+let frameHeight = 64
+
 class Preview extends Phaser.Scene {
 
   sprite!:GameObjects.Sprite
-  pipeline!:UVPipeline
 
   internalAnimKey = 0
   internalColorKey = 0
@@ -20,8 +19,9 @@ class Preview extends Phaser.Scene {
   }
 
   preload() {
-    this.load.spritesheet('default-anim', '/assets/default-anim.png', { frameWidth: 15, frameHeight: 15 })
-    this.load.image('default-color', '/assets/default-color.png')
+    this.load.spritesheet('default-anim', '/assets/head-anim.png', { frameWidth, frameHeight })
+    this.load.image('default-color', '/assets/head-test-uv.png')
+    this.load.spritesheet('default', '/assets/head-test.png', { frameWidth, frameHeight })
   }
 
   create() {
@@ -31,23 +31,16 @@ class Preview extends Phaser.Scene {
     cam.setZoom(10)
 
     // create the visual sprite we plan to show color changes on.
-    this.sprite = this.add.sprite(cam.centerX, cam.centerY, 'default-anim')
+    this.sprite = this.add.sprite(cam.centerX, cam.centerY, '')
 
     // generate our default anim.
     this.anims.create({
       key: 'rotate',
       frameRate: 7,
-      frames: this.anims.generateFrameNumbers('default-anim', { start: 0, end: 5 }),
+      frames: this.anims.generateFrameNumbers('default', { start: 0, end: 3 }),
       repeat: -1
     })
-
-    // start playing the animation on our sprite.
-    this.sprite.play('rotate')
-
-    // @ts-ignore
-    this.pipeline = this.renderer.pipelines.add('ColorMapFX', new UVPipeline(this.game, 'default-color'))
-
-    this.sprite.setPipeline(this.pipeline)
+ 
 
     events.on('changedAnimation', (animUrl:string) => {
       console.log('changing animation')
@@ -56,9 +49,31 @@ class Preview extends Phaser.Scene {
       this.load.once('complete', () => {
         console.log('loaded animation')
         // TODO: build animation then change it.
+
+        const lookupKey = (this.internalColorKey > 0) ? `${this.internalColorKey}-color` : 'default-color'
+        const animKey = (this.internalAnimKey > 0) ? `${this.internalAnimKey}-anim` : 'default-anim'
+
+        const { key, anims } = convertAnimationToSpriteSheet(this.game, {
+          lookupKey,
+          spriteSheet: {
+            key: animKey,
+            frameWidth,
+            frameHeight
+          },
+          animations: [{
+            key: 'rotate',
+            frameRate: 7,
+            startFrame: 0,
+            endFrame: 3,
+            repeat: -1
+          }]
+        })
+
+        this.sprite.play(anims[0])
       })
       this.load.start()
     })
+
 
     events.on('changedColorScheme', (colorUrl:string) => {
       console.log('changing color')
@@ -67,7 +82,26 @@ class Preview extends Phaser.Scene {
       this.load.once('complete', () => {
         console.log('loaded color')
 
-        this.pipeline.changeDefaultUVTexture(`${this.internalColorKey}-color`)
+        const lookupKey = (this.internalColorKey > 0) ? `${this.internalColorKey}-color` : 'default-color'
+        const animKey = (this.internalAnimKey > 0) ? `${this.internalAnimKey}-anim` : 'default-anim'
+
+        const { key, anims } = convertAnimationToSpriteSheet(this.game, {
+          lookupKey,
+          spriteSheet: {
+            key: animKey,
+            frameWidth,
+            frameHeight
+          },
+          animations: [{
+            key: 'rotate',
+            frameRate: 7,
+            startFrame: 0,
+            endFrame: 3,
+            repeat: -1
+          }]
+        })
+
+        this.sprite.play(anims[0])
       })
       this.load.start()
     })
@@ -80,14 +114,14 @@ class Preview extends Phaser.Scene {
         lookupKey,
         spriteSheet: {
           key: animKey,
-          frameWidth: 15,
-          frameHeight: 15
+          frameWidth,
+          frameHeight
         },
         animations: [{
           key: 'rotate',
           frameRate: 7,
           startFrame: 0,
-          endFrame: 5,
+          endFrame: 3,
           repeat: -1
         }]
       })
@@ -100,24 +134,31 @@ class Preview extends Phaser.Scene {
       const lookupKey = (this.internalColorKey > 0) ? `${this.internalColorKey}-color` : 'default-color'
       const animKey = (this.internalAnimKey > 0) ? `${this.internalAnimKey}-anim` : 'default-anim'
 
-      const anims = convertAnimationToSpriteSheet(this.game, {
+      const { key, anims } = convertAnimationToSpriteSheet(this.game, {
         lookupKey,
         spriteSheet: {
           key: animKey,
-          frameWidth: 15,
-          frameHeight: 15
+          frameWidth,
+          frameHeight
         },
         animations: [{
           key: 'rotate',
           frameRate: 7,
           startFrame: 0,
-          endFrame: 5,
+          endFrame: 3,
           repeat: -1
         }]
       })
 
-      console.log(anims)
       this.sprite.play(anims[0])
+    })
+
+    events.on('change-frameheight', (height:number) => {
+      frameHeight = height
+    })
+
+    events.on('change-framewidth', (width:number) => {
+      frameWidth = width
     })
   }
 

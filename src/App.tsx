@@ -4,6 +4,7 @@ import './App.css'
 
 import PreviewScene from './scenes/preview'
 import Preview from './Preview'
+import CreateBase from './CreateBase'
 
 
 let createdCanvas = false
@@ -51,7 +52,7 @@ function App() {
             >preview</button>
           </div>
 
-          <Preview />
+          {createOpen ? <CreateBase /> : <Preview />}
         </div>
       </section>
     </div>
